@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 
     # my apps
     'landing',
+    'users',
 ]
 
 MIDDLEWARE = [

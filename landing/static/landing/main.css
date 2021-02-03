@@ -1,5 +1,6 @@
 :root {
     --black: #242424;
+    --darkish-gray: #999;
     --ghost-white: #f5f5f5;
     --dark-blue: #2352c5;
     --gold:  #FAC71B;
@@ -130,6 +131,10 @@ footer li i {
     margin-right: 10px;
 }
 
+footer ul.links li {
+    max-width: 100px;
+}
+
 footer ul.links li i {
     margin-left: 10px;
 }
@@ -159,4 +164,127 @@ footer a:hover {
 
 .addres-tb tr td i {
     font-size: 20px;
+}
+
+li.rotate:hover a{
+    color: var(--gold);
+}
+li.rotate:hover i{
+    color: var(--gold);
+}
+
+i.icofont-square {
+    display: inline-block;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    -webkit-transition-duration: .5s;
+    -ms-transition-duration: .5s;
+}
+
+li.rotate:hover .icofont-square {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+}
+
+/********************************
+AUTHENTICATION PAGES
+*********************************/
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.wrapper-detail {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.inner {
+    position: relative;
+    max-width: 850px;
+    margin: auto;
+    padding: 20px;
+    color: #242424;
+    -moz-box-shadow: 0 0 4px #ccc;
+    -webkit-box-shadow: 0 0 4px #ccc;
+    box-shadow: 0 0 4px #ccc;
+}
+
+.input {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: var(--darkish-gray);
+    padding: 7px;
+    width: 100%;
+    margin: 7px;
+  }
+
+.input:focus {
+    border-color: #2352c5;
+  }
+
+.confirm-btn {
+    margin-top: 35px;
+    background-color: var(--darkish-gray);
+    height: 50px;
+    width: 150px;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.discard-btn {
+    margin: 5px 5px 5px -25px;
+    background-color: var(--darkish-gray);
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.close-btn {
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.close-btn a{
+    display: inline-block;
+    font-weight: 500;
+    margin: 0;
+    font-size: 60px;
+    color: var(--darkish-gray);
+    transform: rotate(45deg);
+}
+
+.close-btn a:hover {
+    color: var(--black);
+}
+
+.close-btn span {
+    display: inline-block;
+    opacity: 0;
+    transition: 0.4s;
+    transform: translateX(10px);
+}
+
+.close-btn:hover span {
+    opacity: 1;
+    transform: translateX(-10px);
+}
+
+.input-password {
+    font: small-caption;
+    font-size: 16px;
+}
+
+.span-link {
+    font-size: 12px;
+    font-weight: 600;
 }
