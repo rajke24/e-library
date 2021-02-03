@@ -1,0 +1,45 @@
+{% extends "landing/auth_base_template.html" %}
+{% load static %}
+{% block content %}
+<div class="wrapper bg-gray">
+    <div class="container inner bg-white">
+        <div class="row">
+            <div class="col-12 col-sm-6 image-holder">
+                <img class="rounded" src="{% static 'landing/images/signup-photo.jpg'%}" alt="">
+            </div>
+            <div class="col-12 col-sm-6 p-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h3 class="text-center mb-5"><b>Sign Up</b></h3>
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" name="first_name" placeholder="First Name" {% if form.is_bound %} value="{{ form.first_name.value }}" {% endif %} class="input" autocomplete="new-password">
+                                    <small>{{ form.first_name.errors}}</small>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="last_name" placeholder="Last Name" {% if form.is_bound %} value="{{ form.last_name.value }}" {% endif %} class="input" autocomplete="new-password">
+                                    <small>{{ form.last_name.errors}}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" name="username" placeholder="Username" {% if form.is_bound %} value="{{ form.username.value }}" {% endif %} class="input" autocomplete="new-password">
+                        <small>{{ form.username.errors}}</small>
+                        <input type="email" name="email" placeholder="Email" {% if form.is_bound %} value="{{ form.email.value }}" {% endif %} class="input">
+                        <small>{{ form.email.errors}}</small>
+                        <input type="password" name="password1" placeholder="Password" class="input input-password" autocomplete="new-password">
+                        <small>{{ form.password1.errors}}</small>
+                        <input type="password" name="password2" placeholder="Confirm Password" class="input input-password" autocomplete="new-password">
+                        <small>{{ form.password2.errors}}</small>
+                    </fieldset>
+                    <span class="span-link ml-3 mt-3" style="display: inline-block;">Already have an account? <a href="{% url 'login' %}">Log In</a></span>
+                    <div class="text-center">
+                        <button class="confirm-btn" type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

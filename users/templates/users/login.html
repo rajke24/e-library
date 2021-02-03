@@ -41,7 +41,7 @@
             />
             <div>
               <small class="ml-3"
-                ><a href="#"
+                ><a href="{% url 'password_reset' %}"
                   >Forgot your password?</a
                 ></small
               >
@@ -51,7 +51,7 @@
             <button class="confirm-btn" type="submit">Log In</button>
             <span class="span-link mt-4" style="display: block"
               >Don't have an account?
-              <a href="#">Create One</a></span
+              <a href="{% url 'register' %}">Create One</a></span
             >
           </div>
         </form>
