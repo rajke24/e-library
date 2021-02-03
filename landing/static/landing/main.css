@@ -1,0 +1,162 @@
+:root {
+    --black: #242424;
+    --ghost-white: #f5f5f5;
+    --dark-blue: #2352c5;
+    --gold:  #FAC71B;
+}
+
+body,
+html {
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 5rem;
+    line-height: 1.6;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+h2 { 
+    font-weight: 300;
+} 
+
+hr { 
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+hr.solid {border-top: 1.9px solid;}
+hr.solid.blue { color: var(--dark-blue)}
+
+a {
+    text-decoration: none;
+    transition: ease 0.3s;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.bg-black {
+    background: var(--black);
+}
+
+.bg-gray {
+    background: var(--ghost-white);
+}
+
+/**************
+   HOME PAGE
+***************/
+
+#landing-wrapper {
+    height: 100vh;
+    min-height: 500px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/static/landing/images/background-image.jpg');
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+}
+
+.mainmenu-area {
+    background: rgba(0,0,0, 0.8)
+}
+
+.navbar-nav .nav-link {
+    color: #FFF !important;
+}
+
+div.dropdown-menu {
+    left: -100;
+}
+
+.fade-in-up {
+    animation-name: fadeInUp;
+}
+
+.jumbotron {
+    margin-top: 100px;
+    background: none;
+}
+
+.input-group .btn {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.card-header a {
+    color: #5b5b5b;
+}
+
+.section {
+    padding: 80px 0;
+}
+
+.icon-bar li {
+    color: var(--dark-blue);
+    font-size: 26px;
+}
+
+.icon-bar li::after {
+    background-color: var(--dark-blue);
+    content: "";
+    display: inline-block;
+    height: 1px;
+    margin: 6px 0 6px 6px;
+    width: 100px;
+}
+
+.about-img-wrapper {
+    padding: 40px 0 0 50px;
+}
+
+.about-img-wrapper img {
+    border-radius: 5%;
+}
+
+.list-unstyled {
+    list-style-type:none;
+}
+
+.list-inline {
+    padding: 0;
+    white-space: nowrap;
+}
+
+.list-inline > li {
+    display: inline;
+}
+
+footer li i {
+    margin-right: 10px;
+}
+
+footer ul.links li i {
+    margin-left: 10px;
+}
+
+footer a {
+    color: var(--ghost-white);
+}
+
+
+footer a:hover {
+    color: var(--gold);
+}
+
+.social-icons i {
+    font-size: 16px;
+}
+
+.table > tbody > tr > td {
+    padding: 8px;
+    line-height: 1.4;
+    vertical-align: top;
+}
+
+.border-none * {
+    border: none !important;
+}
+
+.addres-tb tr td i {
+    font-size: 20px;
+}
