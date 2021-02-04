@@ -1,0 +1,65 @@
+{% extends "landing/profile_base_template.html" %}
+{% load static %}
+{% block content %}
+<div class="wrapper bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 inner bg-white">
+                <div class="profile-nav">
+                    <div class="user-heading round">
+                        <a href=""><img src="{{ user.profile.image.url }}" alt=""></a>
+                        <h1>{{ user.username }}</h1>
+                    </div>
+
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-link"><a href="{% url 'profile' %}">Profile</a></li>
+                        <li class="nav-link"><a href="#">My Books</a></li>
+                        <li class="nav-link active"><a href="">Edit Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 inner bg-white">
+                <div class="panel">
+                    <h2 class="mb-4">Bio Graph</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <p><span>First Name</span>: {{ user.first_name }}</p>
+                                <div class="form-group row">
+                                    <p class="col-6"><span>My Favorite Book</span>: </p>
+                                    <input type="text" name="favourite_book" value="{{ user.profile.favourite_book }}" class="col-5" autocomplete="new-password">
+                                </div>
+                                <div class="form-group row">
+                                    <p class="col-6"><span>Email</span>: </p>
+                                    <input type="text" name="email" value="{{ user.email }}" class="col-5" autocomplete="new-password">
+                                </div>                           
+                            </div>
+                            <div class="col-6">
+                                <p><span>Last name</span>: {{ user.last_name }}</p>
+                                <div class="form-group row">
+                                    <p class="col-6"><span>My Favorite Genre</span>: </p>
+                                    <input type="text" name="favourite_genre" value="{{ user.profile.favourite_genre }}" class="col-5">
+                                </div>
+                                <div class="form-group row">
+                                    <p class="col-6"><span>Mobile Phone</span>: </p>
+                                    <input type="text" name="mobile_phone" value="{{ user.profile.mobile_phone }}" class="col-5" autocomplete="new-password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <p class="col-3"><span>Profile Image</span>: </p>
+                            <input type="file" name="image" id="files" accept="image/*" style="display: none;">
+                            <label class="btn btn-primary col-2" id="current" for="files">Select file</label>
+                            <label class="col-7" for="current">Current image: {{ user.profile.image }}</label>
+                        </div> 
+                        <div class="text-center">
+                            <button class="confirm-btn mt-5" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

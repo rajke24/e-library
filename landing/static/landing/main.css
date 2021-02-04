@@ -288,3 +288,77 @@ AUTHENTICATION PAGES
     font-size: 12px;
     font-weight: 600;
 }
+
+/********************************
+PROFILE
+*********************************/
+.profile-nav h1 {
+    font-size: 22px;
+}
+.profile-nav h2 {
+    font-size: 18px;
+}
+
+.profile-nav p {
+    font-size: 13px;
+}
+
+.profile-nav .user-heading {
+    border: 1px solid #fff;
+    border-radius: 3px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.profile-nav .user-heading a img {
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    -webkit-border-radius:50%;
+} 
+
+.round {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 2px solid rgba(255, 255,255, 0.3);
+    display: inline-block;
+}
+
+.profile-nav .nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.profile-nav ul > li {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    border-left: 5px solid transparent;
+    border-bottom: 1px solid #ebeae6;
+    line-height: 30px;
+}
+
+.profile-nav ul > li > a {
+    color: #89817f;
+}
+
+.profile-nav ul > li:hover,
+.profile-nav ul > li:focus,
+.profile-nav ul li.active {
+    background: #f5f5f5 !important;
+    border-left: 5px solid #242424;
+    color: #89817f !important;
+}
+
+.col-md-3.inner {
+    padding:0;
+}
+
+.panel p span {
+    width: 150px;
+    display: inline-block;
+}

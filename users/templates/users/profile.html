@@ -1,0 +1,48 @@
+{% extends "landing/profile_base_template.html" %} 
+{% load static %}
+{% block content %}
+<div class="wrapper bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 inner bg-white">
+                <div class="profile-nav">
+                    <div class="user-heading round">
+                        <a href=""><img src="{{ user.profile.image.url }}" alt=""></a>
+                        <h1>{{ user.username }}</h1>
+                    </div>
+
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-link active"><a href="">Profile</a></li>
+                        <li class="nav-link"><a href="">My Books</a></li>
+                        <li class="nav-link"><a href="{% url 'profile_edit' %}">Edit Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 inner bg-white">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="panel">
+                    <h2 class="mb-4">Bio Graph</h2>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><span>First Name</span>: {{ user.first_name }}</p>
+                            <p><span>My Favorite Book</span>: {{ user.profile.favourite_book}}</p>
+                            <p><span>Email</span>: {{ user.email }}</p>
+                        </div>
+                        <div class="col-6">
+                            <p><span>Last name</span>: {{ user.last_name }}</p>
+                            <p><span>My Favorite Genre</span>: {{ user.profile.favourite_genre }}</p>
+                            <p><span>Mobile phone</span>: {{ user.profile.mobile_phone }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends "landing/profile_base_template.html" %}
+{% load static %} 
+{% block content %}
+
+<div class="wrapper bg-gray">
+  <div class="container" style="margin-top: 90px;">
+    <div class="row">
+      <div class="col-md-3 inner bg-white">
+        <div class="profile-nav">
+          <div class="user-heading round">
+            <a href=""
+              ><img src="{{ user.profile.image.url }}" alt=""
+            /></a>
+            <h1>{{ user.username }}</h1>
+          </div>
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-link"><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="nav-link active"><a href="">My Books</a></li>
+            <li class="nav-link">
+              <a href="{% url 'profile_edit' %}">Edit Profile</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 inner bg-white">
+        <div class="panel">
+          <h2 class="mb-4">My books</h2>
+          {% if bookRentals|length == 0 and bookReservations|length == 0 %}
+            <h4>No Books Found</h4>
+          {% else %}
+          <div class="panel panel-primary">
+            <div class="panel-heading"><h3>Reserved</h3></div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-2">Image</div>
+                    <div class="col-6">Title, author</div>
+                    <div class="col-4">Actions</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="row">
+                  {% for bookReservation in bookReservations %}
+                  <!-- {% if bookReservation %} -->
+                  <div class="col-12">
+                    <div class="row row-record">
+                      <div class="col-2">
+                        <img
+                          src="{{ bookReservation.book.book.image.url }}"
+                          class="book-item-object"
+                          width="50"
+                        />
+                      </div>
+                      <div class="col-6">
+                        <h5>{{ bookReservation.book.book.title }}</h5>
+                        <h6>
+                          {{ bookReservation.book.book.author }}
+                        </h6>
+                      </div>
+                      <div class="col-4">
+                        <div class="text-center">
+                          <form method="POST">
+                            {% csrf_token %}
+                            <input
+                              type="hidden"
+                              name="book_instance_id"
+                              value="{{bookReservation.book.id}}"
+                            />
+                            <button class="discard-btn" type="submit">
+                              Discard reservation
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- {% endif %} -->
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-primary">
+            <div class="panel-heading"><h3>On loan</h3></div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="row" style="width: 90%;">
+                  <div class="col-2">Image</div>
+                  <div class="col-3">Title, author</div>
+                  <div class="col-3">Return date</div>
+                  <div class="col-2">Days expired</div>
+                  <div class="col-1">Cost</div>
+                  <div class="col-1">Action</div>
+                </div>
+                <div class="row" style="width: 90%;">
+                  {% for bookRental in bookRentals %} 
+                    {% if bookRental.book.status == 'O' and bookRental.on_loan_end is None %}
+                      <div class="col-2">
+                        <img
+                            src="{{ bookRental.book.book.image.url }}"
+                            class="book-item-object"
+                            width="50"
+                        />
+                      </div>
+                      <div class="col-3">
+                        <h5>{{ bookRental.book.book.title }}</h5>
+                        <h6>
+                            {{ bookRental.book.book.author }}
+                        </h6>
+                      </div>
+                      <div class="col-3">
+                        <h6 class="{% if current_data > bookRental.get_due_date %}book_return_expired{%endif%}">
+                            {{bookRental.get_due_date}}
+                        </h6>
+                      </div>
+                      <div class="col-2">
+                        <h6 class="{% if current_data > bookRental.get_due_date %}book_return_expired{%endif%}">
+                            {{bookRental.get_days_expired}} days
+                        </h6>
+                      </div>
+                      <div class="col-1">
+                        <h6 class="{% if current_data > bookRental.get_due_date %}book_return_expired{%endif%}">
+                          {{bookRental.get_cost}} zł
+                        </h6>
+                      </div>
+                      <div class="col-1">
+                        {% if current_data < bookRental.get_due_date %}
+                        <div class="text-center">
+                          <form method="POST">
+                          {% csrf_token %}
+                          <input
+                              type="hidden"
+                              name="book_instance_extend_id"
+                              value="{{bookRental.book.id}}"
+                          />
+                          <button class="discard-btn" type="submit">
+                              Extend
+                          </button>
+                          </form>
+                        </div>
+                        {%endif%}
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %} 
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
