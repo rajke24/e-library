@@ -3,7 +3,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 
 from .forms import UserRegistrationForm
+from .decorators import is_unauthenticated
 
+@is_unauthenticated
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -20,7 +22,7 @@ def login_page(request):
 
     return render(request, 'users/login.html', {'title': 'Log in'})
 
-
+@is_unauthenticated
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
