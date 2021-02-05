@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 from .forms import UserRegistrationForm, ProfileUpdateFrom, UserUpdateForm
-from .decorators import is_unauthenticated
+from .decorators import is_unauthenticated, is_allowed
 
 @is_unauthenticated
 def login_page(request):
@@ -29,6 +30,9 @@ def register(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            group = Group.objects.get(name='reader')
+            user.groups.add(group)
+            user.save()
             messages.success(request, 'Account successfully created.')
             return redirect('login')
     else:
@@ -38,11 +42,13 @@ def register(request):
 
 
 @login_required
+@is_allowed(allowed_groups=['reader'])
 def profile(request):
     return render(request, 'users/profile.html')
 
 
 @login_required
+@is_allowed(allowed_groups=['reader'])
 def profile_edit(request):
     if request.method == 'POST':
         profile_form = ProfileUpdateFrom(request.POST, request.FILES, instance=request.user.profile)
