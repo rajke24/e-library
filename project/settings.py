@@ -24,7 +24,7 @@ INSTALLED_APPS = [
 
     # my apps
     'landing',
-    'users',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
