@@ -411,6 +411,12 @@ PROFILE
     color: var(--gold);
   }
 
+.active-half-star{
+    background: linear-gradient(90deg, var(--gold) 40%, #A8A498 30%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
   .rating-star{
      color: #A8A498;
   }

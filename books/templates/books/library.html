@@ -95,7 +95,7 @@
                 <ul class="list-unstyled category-menu">
                 {% for genre in genres %}
                     <li>
-                    <!-- <a href="{% url 'filter_book' %}?book_genre={{ genre.name }}">{{ genre.name }}</a> -->
+                        {{ genre }}
                     </li>
                 {% endfor %}
                 </ul>
