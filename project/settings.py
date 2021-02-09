@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 
     # my apps
     'landing',
+    'books',
     'users.apps.UsersConfig',
 ]
 
