@@ -362,3 +362,125 @@ PROFILE
     width: 150px;
     display: inline-block;
 }
+
+/* Books library */
+
+.pull-left{
+    float:left;
+  }
+  .pull-right{
+    float:right;
+  }
+  
+  .input-search{
+    width: 90%;
+    float:left;
+    border: 1px solid #d6d6d6;
+    border-radius: 6px 0 0 6px;
+    padding-left: 15px;
+  }
+
+  .input-group{
+    float:left;
+    
+  }
+  .btn-primary{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .space-10{
+    height:10px;
+  }
+   .space-30{
+    height:30px;
+  }
+  .space-80{
+    height:80px;
+  }
+
+  .book-item-left .book-item-body{
+    display: table-cell;
+    vertical-align: 10px;
+  }
+
+  .book-item-object{
+    display: block;
+  }
+
+  .active-star{
+    color: var(--gold);
+  }
+
+  .rating-star{
+     color: #A8A498;
+  }
+
+  .book-item{
+    padding: 30px 20px;
+    min-width: 190px;
+    min-height: 290px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease 0s;
+    border: 2px solid #d6d6d6;
+    border-radius: 4px;
+    margin-bottom: 20px; 
+  }
+  .book-item:hover{
+    border-color: var(--gold);
+    box-shadow: 0 5px 15px 5px rgba(0,0,0,0.3);
+    transform: translateY(-5px);
+  }
+
+  .book-item-image {
+    margin-bottom: 10px;
+  }
+
+  .book-item-body {
+    padding-left: 25px;
+  }
+
+  .category-menu li {
+    margin-bottom: 10px;
+  }
+  .category-menu li a{
+   
+    color: #5d5d5d;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0s
+  }
+
+  .category-menu li a:hover{
+    color: var(--gold);
+    margin-left: 5px;
+  }
+
+  .category-menu li a::before{
+    content: "#";
+    font-weight: bold;
+  }
+
+  .sort-menu li a{
+    color: #5d5d5d;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s
+  }
+
+  .sort-menu li a:hover{
+    color: var(--gold);
+  }
+
+  .sort-menu li a::before{
+    font-weight: bold;
+  }
+
+/********************************/
+/***   Book details opinion   ***/
+/********************************/
+.text-black {
+    color: #000000;
+    font-weight: bold;
+}
+
+.reviews-members .media .mr-3 {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
