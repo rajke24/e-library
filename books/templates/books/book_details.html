@@ -7,7 +7,11 @@
 
 </style>
 <div class="wrapper-detail bg-gray" style="padding-top: 60pt;">
-    <div class="container inner bg-white mt-5">
+    <div class="container inner bg-white mt-5 pt-5">
+        <div class="close-btn">
+            <span>back to library</span>
+            <a href="{% url 'library' %}">+</a>
+        </div>
         <div class="row ">
             <div class="col-lg-5 align-items-start image-holder">
                 <img class="rounded" src="{{ book.image.url }}" alt="book image" width="300">
@@ -43,7 +47,7 @@
                     {{ book.summary|linebreaksbr }}
                 </p>
                 <p>ISBN: {{ book.isbn|linebreaksbr }} </p>
-                {% if bookInstance.status  == "A" %}
+                {% if bookInstance.status  == "AVAILABLE" %}
                 <p>Available: Yes </p>
                 <form method="POST">
                     {% csrf_token %}
@@ -56,7 +60,6 @@
                 {% else %}
                 <p>Available: No </p>
                 {% endif %} 
-                
             </div>
         </div>
     </div>

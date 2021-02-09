@@ -74,6 +74,7 @@
                                 <p>
                                     {{ book.summary|linebreaksbr }}
                                 </p>
+                                <a href="{% url 'bookDetails' id=book.id %}">See the Book</a>
                             </div>
                         </div>
                     </div>
