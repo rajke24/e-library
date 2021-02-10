@@ -2,73 +2,104 @@
 
 from django.db import migrations
 
-def populate_books_app_db(apps, schema_editor):
-    Genre = apps.get_model('books', 'Genre')
-    Author = apps.get_model('books', 'Author')
-    Book = apps.get_model('books', 'Book')
-    BookInstance = apps.get_model('books', 'BookInstance')
-    create_books(Genre, Author, Book, BookInstance)
+genres = [
+    'Drama',
+    'Comedy',
+    'Adventure',
+    'Novela',
+    'Horror',
+    'Thriller',
+    'History',
+    'Fantasy',
+    'Science fiction',
+]
+
+authors = [
+    {'first_name': 'Stephen', 'last_name': 'King'},
+    {'first_name': 'J.K', 'last_name': 'Rowling'},
+    {'first_name': 'Charles', 'last_name': 'Dickens'},
+]
 
 
-def create_books(Genre, Author, Book, BookInstance):
-    genres= [
-        'Drama', 
-        'Comedy', 
-        'Adventure', 
-        'Novela', 
-        'Horror',
-        'Thriller',
-        'History', 
-        'Fantasy',
-        'Science fiction',
-        ]
+def create_genres(Genre, genres):
     created_genres = {}
     for genre in genres:
         created_genres[genre] = Genre.objects.create(name=genre)
+    
+    return created_genres
 
-    authors = [
-        {'first_name': 'Stephen', 'last_name': 'King'},
-        {'first_name': 'J.K', 'last_name': 'Rowling'},
-        {'first_name': 'Charles', 'last_name': 'Dickens'},
-    ]
+
+def create_authors(Author, authors):
     created_authors = {}
     for author in authors:
         first_name, last_name = author['first_name'], author['last_name']
         author = f'{first_name} {last_name}'
         created_authors[author] = Author.objects.create(first_name=first_name, last_name=last_name)
     
+    return created_authors
+
+
+def create_books(Book, created_genres, created_authors):
     books = [
         {
-            'title': 'Duma Key', 
-            'author': created_authors['Stephen King'], 
+            'title': 'Duma Key',
+            'author': created_authors['Stephen King'],
             'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem eros, pulvinar sit amet nulla non, facilisis scelerisque lectus. Proin sit amet nibh at metus porta auctor. Vestibulum velit libero, vehicula vel venenatis aliquet, bibendum nec massa.',
             'isbn': '1234567891234',
             'genres': created_genres['Horror'],
         },
         {
-            'title': 'Harry Potter and the Philosophers Stone', 
-            'author': created_authors['J.K Rowling'], 
+            'title': 'Harry Potter and the Philosophers Stone',
+            'author': created_authors['J.K Rowling'],
             'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem eros, pulvinar sit amet nulla non, facilisis scelerisque lectus. Proin sit amet nibh at metus porta auctor. Vestibulum velit libero, vehicula vel venenatis aliquet, bibendum nec massa.',
             'isbn': '1234567891224',
             'genres': created_genres['Fantasy'],
         },
         {
-            'title': 'Moby Dick', 
-            'author': created_authors['Charles Dickens'], 
+            'title': 'Moby Dick',
+            'author': created_authors['Charles Dickens'],
             'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem eros, pulvinar sit amet nulla non, facilisis scelerisque lectus. Proin sit amet nibh at metus porta auctor. Vestibulum velit libero, vehicula vel venenatis aliquet, bibendum nec massa.',
             'isbn': '1234567891231',
             'genres': created_genres['Drama'],
         },
     ]
 
+    created_books = {}
+
     for book in books:
-        Book.objects.create(
+        title = book['title']
+        created_books[title] = Book.objects.create(
             title=book['title'],
             author=book['author'],
             summary=book['summary'],
             isbn=book['isbn'],
-        ).genre.add(book['genres'])
+        )
+        created_books[title].genre.add(book['genres'])
+    
+    return created_books
 
+    
+def create_book_instances(BookInstance, created_books):
+    for book in created_books.values():
+        BookInstance.objects.create(
+            book=book,
+            imprint=book.isbn,
+        )
+        BookInstance.objects.create(
+            book=book,
+            imprint=str(int(book.isbn) + 1),
+        )
+
+
+def populate_books_app_db(apps, schema_editor):
+    Genre = apps.get_model('books', 'Genre')
+    Author = apps.get_model('books', 'Author')
+    Book = apps.get_model('books', 'Book')
+    BookInstance = apps.get_model('books', 'BookInstance')
+    created_genres = create_genres(Genre, genres)
+    created_authors = create_authors(Author, authors)
+    created_books = create_books(Book, created_genres, created_authors)
+    create_book_instances(BookInstance, created_books)
 
     
 def reverse_func(apps, schema_editor):
@@ -80,6 +111,7 @@ def reverse_func(apps, schema_editor):
     Genre.objects.all().delete()
     Author.objects.all().delete()
     Book.objects.all().delete()
+    BookInstance.objects.all().delete()
 
 
 class Migration(migrations.Migration):
