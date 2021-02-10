@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="tab-pane active" id="book">
-                                <form method="GET" action="">
+                                <form method="GET" action="{% url 'filter_book' %}">
                                     <div class="input-group">
                                         <input type="text" name="book_title" class="form-control" placeholder="Enter book title">
                                         <div class="input-group-btn">
@@ -44,7 +44,7 @@
                                 </form>
                             </div>
                             <div class="tab-pane" id="author">
-                                <form method="GET" action="">
+                                <form method="GET" action="{% url 'filter_book' %}">
                                     <div class="input-group">
                                         <input type="text" name="book_author" class="form-control" placeholder="Enter author name">
                                         <div class="input-group-btn">
