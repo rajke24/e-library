@@ -490,3 +490,15 @@ PROFILE
     height: 56px;
     object-fit: cover;
 }
+
+/********************************/
+/***   Ebook details opinion   ***/
+/********************************/
+.download-form {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.download-form button {
+    font-size:15px;
+}

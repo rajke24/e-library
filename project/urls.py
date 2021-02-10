@@ -14,6 +14,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('', include('users.urls')),
     path('', include('books.urls')),
+    path('', include('ebooks.urls')),
 ]
 
 if settings.DEBUG:

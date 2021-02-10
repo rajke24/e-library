@@ -1,0 +1,162 @@
+{% extends 'landing/profile_base_template.html' %}
+{% load static %}
+{% load group_tags %}
+
+{% block content %} 
+<div class="wrapper-detail bg-gray" style="padding-top: 60pt;">
+    <div class="container inner bg-white mt-5 pt-5">
+        <div class="close-btn">
+            <span>back to elibrary</span>
+            <a href="{% url 'elibrary' %}">+</a>
+        </div>
+        <div class="row ">
+            <div class="col-lg-5 align-items-start image-holder">
+                <img class="rounded" src="{{ ebook.book.image.url }}" alt="book image" width="300">
+                <div class="space-10"></div>
+            </div>
+            <div class="col-lg-7 align-items-start mt-3">
+                <h1>{{ ebook.book.title }}</h1>
+                <p>{{ ebook.book.author }}</p>
+                {{ebook.book.rating}}
+                <ul class="list-inline list-unstyled rating-star">
+                    {% for _ in ebook.book.get_enabled_star %}
+                        <li class="active-star">
+                            <i class="icofont-star"></i>
+                        </li>
+                    {% endfor %}
+                    {% if ebook.book.is_half_star_active %}
+                        <li class="active-half-star">
+                            <i class="icofont-star"></i>
+                        </li>
+                    {% endif %}
+                    {% for _ in ebook.book.get_disabled_star %}
+                        <li>
+                            <i class="icofont-star"></i>
+                        </li>
+                    {% endfor %}
+              </ul>
+                <p>Genre: 
+                    {% for genre in ebook.book.genre.all %} 
+                        {{genre.name}}{% if not forloop.last %},{% endif %}
+                    {% endfor %}</p>
+                <h4>Summary:</h4>
+                <p>
+                    {{ ebook.book.summary|linebreaksbr }}
+                </p>
+                <p>ISBN: {{ ebook.book.isbn|linebreaksbr }} </p>
+                
+                {% if ebook.pdf_book  %}
+                    <a href="{{ebook.pdf_book.url}}" target="blank"><h5><b>Read Online</b></h5></a>
+                    <p>Or</p>
+                {% endif %}
+                <strong>Download Ebook</strong><br>
+                <div class="space-10"></div>
+                <form class="download-form" action="{% url 'download_ebook' pk=ebook.id %}?type=txt" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        <span>.txt</span>
+                        <i class="icofont-file-text"></i>
+                    </button>
+                </form>
+                
+                <form class="download-form" action="{% url 'download_ebook' pk=ebook.id %}?type=pdf" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                        <span>.pdf</span>
+                        <i class="icofont-file-pdf"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if user.is_authenticated and request.user|has_group:"reader" %}
+    <div class="container inner bg-white mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+
+                 <label class="ml-1"  for="opinion_title">Rating: </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="defaultInline1" name="rating" value="1">
+                  <label class="custom-control-label" for="defaultInline1">1</label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="defaultInline2" name="rating" value="2">
+                  <label class="custom-control-label" for="defaultInline2">2</label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="defaultInline3" name="rating" value="3">
+                  <label class="custom-control-label" for="defaultInline3">3</label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="defaultInline4" name="rating" value="4">
+                  <label class="custom-control-label" for="defaultInline4">4</label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="defaultInline5" name="rating" checked value="5">
+                  <label class="custom-control-label" for="defaultInline5">5</label>
+                </div>
+
+                <legend class="border-bottom mb-4">Your Opinion</legend>
+                <label class="ml-1"  for="opinion_title">Title</label>
+                <input id="opinion_title" name="title" type="text" class="form-control mb-3">
+                <label for="opinion_description">Description</label>
+                <textarea id="opinion_description" name="content" class="form-control" rows="5"></textarea>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-primary ml-1" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+    <div class="container inner bg-white mt-2">
+        <h3>Book Reviews</h3>
+        <hr>
+        {% for opinion in ebook.book.opinions.all %}
+            <div class="reviews-members pt-4 pb-4">
+                <h4 class="mb-4" style="font-weight: bold;">{{ opinion.title }}</h4>  
+                <div class="media">
+                    <a href="#"><img alt="Generic placeholder image" src="{{ opinion.author.profile.image.url}}" class="mr-3 rounded-pill"></a>
+                    <div class="media-body">
+                        <div class="reviews-members-header">
+                            <h6 class="mb-1"><a class="text-black" href="#">{{ opinion.author.username }}</a></h6>
+                            <p class="text-gray">{{ opinion.date_posted|date:"F d, Y" }}</p>
+                            <ul class="list-inline list-unstyled rating-star">
+                                {% for _ in ebook.book.get_enabled_star %}
+                                    <li class="active-star">
+                                        <i class="icofont-star"></i>
+                                    </li>
+                                {% endfor %}
+                                {% if ebook.book.is_half_star_active %}
+                                    <li class="active-half-star">
+                                        <i class="icofont-star"></i>
+                                    </li>
+                                {% endif %}
+                                {% for _ in ebook.book.get_disabled_star %}
+                                    <li>
+                                        <i class="icofont-star"></i>
+                                    </li>
+                                {% endfor %}
+                            </ul>  
+                        </div>
+                        <div class="reviews-members-body">
+                            <p>{{ opinion.content }}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
