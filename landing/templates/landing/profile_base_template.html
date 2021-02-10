@@ -1,4 +1,5 @@
 {% load static %}
+{% load group_tags %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -54,7 +55,7 @@
             {% if not user.is_authenticated %}
             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
             <a class="nav-item nav-link" href="{% url 'register' %}">Join Us</a>
-            {% else %}
+            {% elif user|has_group:"admin" %}
               <a class="nav-item nav-link" href="#">Admin Page</a>
             {% endif %}
             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
