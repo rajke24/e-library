@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
-from .models import Book, Genre
+from .models import Book, Genre, BookInstance, BookReservation
 from .forms import OpinionCreateForm
 
 
@@ -22,6 +22,10 @@ def book_detail(request, id):
     book = get_object_or_404(Book, id=id)
     opinions = book.opinions.all()
 
+    def get_available_book():
+        book_instances = BookInstance.objects.filter(book=book, status="AVAILABLE")
+        return book_instances[0] if book_instances else None
+
     def update_book_rating():
         rating = 0
         opinions = book.opinions.all()
@@ -37,20 +41,31 @@ def book_detail(request, id):
         new_opinion.save()
         update_book_rating()
 
+    book_instance = get_available_book()
     if request.method == 'POST':
-        if opinions.filter(author=request.user).exists():
-            messages.warning(request, "Cannot add another review. You have already reviewed this book!")
-            return redirect(f'/book/{id}/')
-        form = OpinionCreateForm(request.POST)
+        # add opinion
+        if 'post_opinion' in request.POST:
+            # check if user already added opinion about this book
+            if opinions.filter(author=request.user).exists():
+                messages.warning(request, "Cannot add another review. You have already reviewed this book!")
+                return redirect(f'/library/book/{id}/')
 
-        if form.is_valid():
-            add_opinion(form)
-            messages.success(request, "Review succesfully added!")
-            return redirect(f'/book/{id}/')
+            form = OpinionCreateForm(request.POST)
+            if form.is_valid():
+                add_opinion(form)
+                messages.success(request, "Review succesfully added!")
+                return redirect(f'/library/book/{id}/')
+        elif 'reserve' in request.POST:
+            bookReservation = BookReservation.objects.create(
+                book=book_instance, booker=request.user)
+            book_instance.status = "RESERVED"
+            book_instance.save()
+            messages.success(request, "Book succesfully reserved!", extra_tags="successful_reservation")
+            book_instance = get_available_book()
     else:
         form = OpinionCreateForm()
 
-    return render(request, 'books/book_details.html', {'book': book})
+    return render(request, 'books/book_details.html', {'book': book, 'book_instance': book_instance})
 
 
 def is_valid_queryparam(param):

@@ -12,6 +12,13 @@
             <span>back to library</span>
             <a href="{% url 'library' %}">+</a>
         </div>
+        {% for message in messages %}
+            {% if "successful_reservation" in message.tags %}
+            <div class="alert alert-success mt-2">
+                {{ message }}
+            </div>
+            {% endif %}
+        {% endfor %}
         <div class="row ">
             <div class="col-lg-5 align-items-start image-holder">
                 <img class="rounded" src="{{ book.image.url }}" alt="book image" width="300">
@@ -47,13 +54,13 @@
                     {{ book.summary|linebreaksbr }}
                 </p>
                 <p>ISBN: {{ book.isbn|linebreaksbr }} </p>
-                {% if bookInstance.status  == "AVAILABLE" %}
+                {% if book_instance.status  == "AVAILABLE" %}
                 <p>Available: Yes </p>
                 <form method="POST">
                     {% csrf_token %}
                     {% if user.is_authenticated and request.user|has_group:"reader" %}
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">Reserve</button>
+                            <button type="submit" name="reserve" class="btn btn-success">Reserve</button>
                         </div>
                     {% endif %}
                 </form>
@@ -109,7 +116,7 @@
                 <textarea id="opinion_description" name="content" class="form-control" rows="5"></textarea>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-primary ml-1" type="submit">Post</button>
+                <button class="btn btn-primary ml-1" name="post_opinion" type="submit">Post</button>
             </div>
         </form>
     </div>
