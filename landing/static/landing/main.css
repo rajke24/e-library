@@ -239,7 +239,6 @@ AUTHENTICATION PAGES
 }
 
 .discard-btn {
-    margin: 5px 5px 5px -25px;
     background-color: var(--darkish-gray);
     border: none;
     color: #FFF;
