@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 
     'storages',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,6 @@ AWS_S3_ADDRESSING_STYLE = 'path'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+PHONENUMBER_DB_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_REGION = 'PL'
