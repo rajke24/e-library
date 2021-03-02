@@ -35,17 +35,19 @@
           <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          {% if user.is_authenticated %}
           <div class="dropdown active-user">
             <a class="nav-link" href="#" id="profileDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img src="{{ user.profile.image.url }}" class="round" alt="Profile pic" width="55px" height="55px">
             </a>
             <div class="dropdown-menu" aria-labelledby="profileDropdown">
- 			  <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+ 			        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
               <a class="dropdown-item" href="{% url 'user_books' %}">My books</a>              
               <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
             </div>
           </div>
         </div>
+        {% endif %}
         <div class="collapse navbar-collapse" id="mainMenu">
           <div class="navbar-nav text-center order-md-1 ml-auto">
             <a class="nav-item nav-link active" href="{% url 'home' %}">Home</a>
@@ -58,7 +60,9 @@
             {% elif user|has_group:"admin" %}
               <a class="nav-item nav-link" href="#">Admin Page</a>
             {% endif %}
+            {% if user.is_authenticated %}
             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            {% endif %}
           </div>
         </div>
       </div>
