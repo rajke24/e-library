@@ -10,6 +10,7 @@ SECRET_KEY = os.getenv('LIBRARY_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['nice-e-library.herokuapp.com']
 
@@ -48,14 +49,17 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './logs/debug.log',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
 }
