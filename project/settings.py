@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('LIBRARY_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nice-e-library.herokuapp.com/']
 
 
 # Application definition
